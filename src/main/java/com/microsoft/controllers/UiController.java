@@ -22,7 +22,8 @@ public class UiController {
 
 	@RequestMapping("/vcap")
 	public String getEnv() {
-		DocumentDBProps dbProps = new Gson().fromJson(System.getenv("credentials"), DocumentDBProps.class);
+		//Try to parse VCAP_SERVICES
+		DocumentDBProps dbProps = new Gson().fromJson(System.getenv("VCAP_SERVICES"), DocumentDBProps.class);
 
 		return new Gson().toJson(dbProps);
 	}
