@@ -1,0 +1,8 @@
+---
+applications:
+- name: documentdb
+  memory: 1024M
+  host: docdb
+  domain: app.168.63.105.101.cf.pcfazure.com
+  services:
+  - docdb-dev
