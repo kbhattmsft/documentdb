@@ -4,5 +4,6 @@ applications:
   memory: 1024M
   host: docdb
   domain: app.168.63.105.101.cf.pcfazure.com
+  path: target/documentdb-0.0.1-SNAPSHOT.jar
   services:
   - docdb-dev
