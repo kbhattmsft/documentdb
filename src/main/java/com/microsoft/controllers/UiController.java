@@ -19,9 +19,11 @@ public class UiController {
 	@Autowired
 	private ApplicationContext ctx;
 
-	@RequestMapping("/test")
-	public String testMessage() {
-		return "Hello world";
+	@RequestMapping("/env")
+	public String getDocumentDB() {
+		JSONObject vcap = new JSONObject(System.getenv("VCAP_SERVICES"));
+		JSONObject creds = vcap.getJSONArray("documentdb").getJSONObject(0).getJSONObject("credentials");
+		return creds.toString();
 	}
 
 	@RequestMapping("/vcap")
