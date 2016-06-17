@@ -37,7 +37,7 @@ public class DocDBDAO {
 		DocumentClient client = ctx.getBean(DocumentClientFactory.class).getDocumentClient();
 		Document docDbDoc = new Document(new Gson().toJson(data));
 		DocumentCollection collection = dao.createDocumentCollection(docDB.getSelfLink(), UUID.randomUUID().toString());
-		ResourceResponse<Document> doc = client.createDocument(collection.getDocumentsLink(), docDbDoc, null, true);
+		ResourceResponse<Document> doc = client.createDocument(collection.getSelfLink(), docDbDoc, null, true);
 		return String.valueOf(doc.getStatusCode());
 	}
 
