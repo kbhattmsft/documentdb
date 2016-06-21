@@ -34,7 +34,7 @@ public class DocDBDAO {
 		Document docDbDoc = new Document(new Gson().toJson(data));
 		docDbDoc.set("entityType", data.getType());
 
-		DocumentCollection collection = getDocumentDBCollection(docDB.getSelfLink(), data.getCollectionId());
+		DocumentCollection collection = getCollection(docDB.getSelfLink(), data.getCollectionId());
 		if (collection == null) {
 			collection = createDocumentCollection(docDB.getSelfLink(), data.getCollectionId());
 		}
@@ -42,7 +42,7 @@ public class DocDBDAO {
 		return String.valueOf(doc.getStatusCode());
 	}
 
-	public List<DocumentCollection> loadCollections(String databaseLink)
+	public List<DocumentCollection> loadAllCollectionsByDatabase(String databaseLink)
 			throws BeansException, JSONException, IOException {
 		DocumentClient client = ctx.getBean(DocumentDBFactory.class).getDocumentClient();
 
@@ -55,9 +55,9 @@ public class DocDBDAO {
 		return collections;
 	}
 
-	public List<Document> loadDocuments(String collectionLink) throws BeansException, JSONException, IOException {
+	public List<Document> loadDocumentsByCollection(String collectionLink) throws BeansException, JSONException, IOException {
 		DocumentClient client = ctx.getBean(DocumentDBFactory.class).getDocumentClient();
-		// Retrieve the TodoItem documents
+		// Retrieve the documents
 		List<Document> docs = client.queryDocuments(collectionLink, "SELECT * FROM root r", null).getQueryIterable()
 				.toList();
 		return docs;
@@ -76,7 +76,7 @@ public class DocDBDAO {
 		return collection;
 	}
 
-	public DocumentCollection getDocumentDBCollection(String dabaseLink, String collectionId)
+	public DocumentCollection getCollection(String dabaseLink, String collectionId)
 			throws BeansException, JSONException, IOException {
 
 		DocumentClient client = ctx.getBean(DocumentDBFactory.class).getDocumentClient();

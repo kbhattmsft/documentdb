@@ -39,7 +39,7 @@ public class UiController {
 		data.setCollectionId("Telemetry");
 		data.setId(UUID.randomUUID().toString());
 		data.setData(String.valueOf(System.currentTimeMillis()));
-		data.setType("test");
+		data.setType("timestamp");
 		return ctx.getBean("docDbDao", DocDBDAO.class).save(data);
 	}
 
@@ -47,11 +47,11 @@ public class UiController {
 	public String loadCollections() throws IOException {
 		DocDBDAO dao = ctx.getBean(DocDBDAO.class);
 		List<DocumentCollection> collections = dao
-				.loadCollections(ctx.getBean(Config.class).getDocumentDBProps().getDocumentdb_database());
+				.loadAllCollectionsByDatabase(ctx.getBean(Config.class).getDocumentDBProps().getDocumentdb_database());
 		Gson gson = new Gson();
 		List<SampleModel> data = new ArrayList<SampleModel>();
 		for (DocumentCollection collection : collections) {
-			List<Document> docs = dao.loadDocuments(collection.getSelfLink());
+			List<Document> docs = dao.loadDocumentsByCollection(collection.getSelfLink());
 			for (Document doc : docs) {
 				data.add(gson.fromJson(doc.toString(), SampleModel.class));
 			}
