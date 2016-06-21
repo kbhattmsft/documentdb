@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 @Configuration
 @Profile("local")
-public class LocalConfig {
+public class LocalConfig implements Config {
 
 	@Autowired
 	private ApplicationContext ctx;
