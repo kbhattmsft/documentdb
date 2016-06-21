@@ -2,7 +2,6 @@ package com.microsoft.data.access;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import org.json.JSONException;
 import org.springframework.beans.BeansException;
@@ -35,7 +34,10 @@ public class DocDBDAO {
 		Document docDbDoc = new Document(new Gson().toJson(data));
 		docDbDoc.set("entityType", data.getType());
 
-		DocumentCollection collection = createDocumentCollection(docDB.getSelfLink(), UUID.randomUUID().toString());
+		DocumentCollection collection = getDocumentDBCollection(docDB.getSelfLink(), data.getCollectionId());
+		if (collection == null) {
+			collection = createDocumentCollection(docDB.getSelfLink(), data.getCollectionId());
+		}
 		ResourceResponse<Document> doc = client.createDocument(collection.getSelfLink(), docDbDoc, null, true);
 		return String.valueOf(doc.getStatusCode());
 	}

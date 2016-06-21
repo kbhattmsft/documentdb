@@ -36,8 +36,9 @@ public class UiController {
 	@RequestMapping("/save")
 	public String save() throws BeansException, JSONException, IOException, DocumentClientException {
 		SampleModel data = new SampleModel();
+		data.setCollectionId("Telemetry");
 		data.setId(UUID.randomUUID().toString());
-		data.setData("Hello World!");
+		data.setData(String.valueOf(System.currentTimeMillis()));
 		data.setType("test");
 		return ctx.getBean("docDbDao", DocDBDAO.class).save(data);
 	}
