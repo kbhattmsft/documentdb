@@ -21,7 +21,7 @@ import com.microsoft.data.access.DocDBDAO;
 import com.microsoft.model.SampleModel;
 
 @RestController
-public class UiController {
+public class DocumentController {
 
 	@Autowired
 	private ApplicationContext ctx;
